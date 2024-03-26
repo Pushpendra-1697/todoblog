@@ -21,6 +21,19 @@ function App() {
     }
   };
 
+  const updateTask = (taskId, newStatus, newPriority) => {
+    setTasks(tasks.map(task => {
+      if (task.id === taskId) {
+        return {
+          ...task,
+          status: newStatus,
+          priority: newPriority
+        };
+      }
+      return task;
+    }));
+  };
+
 
   return (
     <Box className="App" fontFamily={'Poppins'} minH={'100vh'} bgGradient="linear(to-r, red.100, blue.100)" display={'flex'} flexDirection={'column'} gap={'20px'} padding={'30px'}>
@@ -32,9 +45,9 @@ function App() {
       </Box>
 
       <Box border={'2px solid white'} boxShadow={'md'} borderRadius={'7px'} minH={'80vh'} p={'20px'} display={'flex'} flexDirection={'column'} gap={'30px'}>
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Box display={'flex'} flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row', xl: "row", "2xl": 'row' }} gap={'10px'} justifyContent={'space-between'} alignItems={'center'}>
           <Box display={'flex'} flexDirection={'column'} gap={'20px'}>
-            <Box display={'flex'} alignItems={'center'} gap={'20px'}>
+            <Box display={'flex'} flexDirection={{ base: 'column', sm: "column", md: 'row', lg: 'row-reverse', xl: 'row', '2xl': 'row' }} alignItems={'center'} gap={'20px'}>
               <p>Filter By:</p>
               <Input bg={'white'} placeholder='Assignee Name' />
               <select style={{ padding: '7px 5px', borderRadius: '5px' }}>
@@ -45,7 +58,7 @@ function App() {
               </select>
               <Input bg={'white'} type='date' />
             </Box>
-            <Box display={'flex'} alignItems={'center'} gap={'20px'}>
+            <Box display={{ base: 'none', sm: 'none', lg: 'flex', md: 'flex', xl: 'flex', "2xl": 'flex' }} alignItems={'center'} gap={'20px'}>
               <p>Sort By:</p>
               <select style={{ padding: '7px 5px', borderRadius: '5px' }}>
                 <option value={''}>Priority</option>
@@ -62,12 +75,14 @@ function App() {
           <ModalContent>
             <ModalHeader>CREATE A TASK</ModalHeader>
             <ModalCloseButton as={RxCrossCircled} background={'none'} cursor={'pointer'} size={'sm'} />
-            <ModalBody display={'flex'} justifyContent={'center'} alignItems={'center'}>
+            <ModalBody display={'flex'} justifyContent={'center'} alignItems={'center'} bgGradient="linear(to-r, red.100, blue.100)">
               <TaskForm onAddTask={addTask} />
             </ModalBody>
           </ModalContent>
         </Modal>
-        <TaskList tasks={tasks} onDeleteTask={deleteTask} />
+        <Box overflowX={'auto'}>
+          <TaskList tasks={tasks} onDeleteTask={deleteTask} onUpdateTask={updateTask} />
+        </Box>
       </Box>
     </Box>
   );

@@ -1,9 +1,10 @@
-import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, Text, Heading, Box } from '@chakra-ui/react';
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, Text, Heading, Box, Button } from '@chakra-ui/react';
 import React from 'react';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import DeleteTask from './DeleteTask';
+import UpdateTask from './UpdateTask';
 
-function TaskList({ tasks, onDeleteTask }) {
+function TaskList({ tasks, onDeleteTask, onUpdateTask }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const statusColumns = ['Pending', 'In Progress', 'Completed', 'Deployed', 'Deferred'];
 
@@ -22,9 +23,9 @@ function TaskList({ tasks, onDeleteTask }) {
     return (
         <Box display={'grid'} gridTemplateColumns={'repeat(5,1fr)'} gap={'30px'}>
             {tasks.length > 0 && statusColumns.map((status) =>
-                <Box key={status} display={'flex'} flexDirection={'column'} gap={'10px'} borderRadius={'7px'} boxShadow={'lg'}>
+                <Box key={status} display={'flex'} flexDirection={'column'} borderRadius={'7px'} boxShadow={'lg'} minW={'250px'}>
                     <Heading py={'10px'} color={'white'} background={status === "Pending" ? 'beige' : status === "In Progress" ? 'orange' : status === 'Completed' ? 'green' : status === 'Deployed' ? 'blue' : 'bisque'} fontSize={'23px'} borderTopRadius={'7px'} textAlign={'center'}>{status}</Heading>
-                    <Box p={'10px'} display={'flex'} flexDirection={'column'} gap={'10px'}>
+                    <Box p={'10px'} display={'flex'} flexDirection={'column'} gap={'10px'} bg={'white'}>
                         {tasks.filter((task) => task.status === status).map((task) =>
                             <Box key={task.id} display={'flex'} flexDirection={'column'} gap={'10px'} background={'beige'} p={'5px'} borderRadius={'3px'}>
                                 <Box borderBottom={'1px solid black'} p={'5px'} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
@@ -41,10 +42,10 @@ function TaskList({ tasks, onDeleteTask }) {
 
                                 <Modal isOpen={isOpen} onClose={onClose}>
                                     <ModalOverlay />
-                                    <ModalContent background={'aliceblue'} borderRadius={'10px'} w={'150px'}>
+                                    <ModalContent background={'aliceblue'} borderRadius={'10px'} w={'200px'}>
                                         <ModalCloseButton />
                                         <ModalBody>
-                                            <Text cursor={'pointer'} borderBottom={'2px solid white'}>Edit</Text>
+                                            <UpdateTask onUpdateTask={onUpdateTask} task={task} />
                                             <DeleteTask onDeleteTask={onDeleteTask} id={task.id} title={task.title} />
                                         </ModalBody>
                                     </ModalContent>
@@ -52,6 +53,7 @@ function TaskList({ tasks, onDeleteTask }) {
 
                                 <Text>Start Date: {formatDate(task.startDate)}</Text>
                                 {(task.endDate && task.status === "Completed") && <Text>End Date: {formatDate(task.endDate)}</Text>}
+                                <Button isDisabled bg={'blue.600'} fontSize={'15px'} color={'white'}>{task.status}</Button>
                             </Box>
                         )}
                     </Box>
