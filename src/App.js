@@ -47,7 +47,7 @@ function App() {
       <Box border={'2px solid white'} boxShadow={'md'} borderRadius={'7px'} minH={'80vh'} p={'20px'} display={'flex'} flexDirection={'column'} gap={'30px'}>
         <Box display={'flex'} flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row', xl: "row", "2xl": 'row' }} gap={'10px'} justifyContent={'space-between'} alignItems={'center'}>
           <Box display={'flex'} flexDirection={'column'} gap={'20px'}>
-            <Box display={'flex'} flexDirection={{ base: 'column', sm: "column", md: 'row', lg: 'row-reverse', xl: 'row', '2xl': 'row' }} alignItems={'center'} gap={'20px'}>
+            <Box display={'flex'} flexDirection={{ base: 'column', sm: "column", md: 'row', lg: 'row', xl: 'row', '2xl': 'row' }} alignItems={'center'} gap={'20px'}>
               <p>Filter By:</p>
               <Input bg={'white'} placeholder='Assignee Name' />
               <select style={{ padding: '7px 5px', borderRadius: '5px' }}>
