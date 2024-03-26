@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
-import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Avatar, Input } from '@chakra-ui/react';
 import { RxCrossCircled } from "react-icons/rx";
 
 function App() {
@@ -23,20 +23,53 @@ function App() {
 
 
   return (
-    <div className="App">
-      <Button mb={'20px'} onClick={onOpen}>Add New Task</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>CREATE A TASK</ModalHeader>
-          <ModalCloseButton as={RxCrossCircled} background={'none'} cursor={'pointer'} size={'sm'} />
-          <ModalBody>
-            <TaskForm onAddTask={addTask} />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-      <TaskList tasks={tasks} onDeleteTask={deleteTask} />
-    </div>
+    <Box className="App" fontFamily={'Poppins'} minH={'100vh'} bgGradient="linear(to-r, red.100, blue.100)" display={'flex'} flexDirection={'column'} gap={'20px'} padding={'30px'}>
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Heading size={'lg'}>Task Board</Heading>
+        <Avatar
+          size={'sm'}
+        />
+      </Box>
+
+      <Box border={'2px solid white'} boxShadow={'md'} borderRadius={'7px'} minH={'80vh'} p={'20px'} display={'flex'} flexDirection={'column'} gap={'30px'}>
+        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+          <Box display={'flex'} flexDirection={'column'} gap={'20px'}>
+            <Box display={'flex'} alignItems={'center'} gap={'20px'}>
+              <p>Filter By:</p>
+              <Input bg={'white'} placeholder='Assignee Name' />
+              <select style={{ padding: '7px 5px', borderRadius: '5px' }}>
+                <option value={''}>Priority</option>
+                <option value="P0">P0</option>
+                <option value="P1">P1</option>
+                <option value="P2">P2</option>
+              </select>
+              <Input bg={'white'} type='date' />
+            </Box>
+            <Box display={'flex'} alignItems={'center'} gap={'20px'}>
+              <p>Sort By:</p>
+              <select style={{ padding: '7px 5px', borderRadius: '5px' }}>
+                <option value={''}>Priority</option>
+                <option value="P0">P0</option>
+                <option value="P1">P1</option>
+                <option value="P2">P2</option>
+              </select>
+            </Box>
+          </Box>
+          <Button onClick={onOpen} bg={'blue.600'} fontSize={'15px'} color={'white'}>Add New Task</Button>
+        </Box>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>CREATE A TASK</ModalHeader>
+            <ModalCloseButton as={RxCrossCircled} background={'none'} cursor={'pointer'} size={'sm'} />
+            <ModalBody display={'flex'} justifyContent={'center'} alignItems={'center'}>
+              <TaskForm onAddTask={addTask} />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+        <TaskList tasks={tasks} onDeleteTask={deleteTask} />
+      </Box>
+    </Box>
   );
 }
 

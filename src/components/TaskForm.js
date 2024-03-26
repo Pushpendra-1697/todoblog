@@ -66,7 +66,7 @@ function TaskForm({ onAddTask }) {
                         <option value="P2">P2</option>
                     </select>
                 </Box>
-                <Button w={'200px'} type="submit">Add Task</Button>
+                <Button bg={'blue'} type="submit">Add Task</Button>
             </form>
         </Box>
     );

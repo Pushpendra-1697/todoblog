@@ -7,6 +7,18 @@ function TaskList({ tasks, onDeleteTask }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const statusColumns = ['Pending', 'In Progress', 'Completed', 'Deployed', 'Deferred'];
 
+
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+        const day = date.getDate();
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
+        const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
+        return formattedDate;
+    };
     return (
         <Box display={'grid'} gridTemplateColumns={'repeat(5,1fr)'} gap={'30px'}>
             {tasks.length > 0 && statusColumns.map((status) =>
@@ -38,8 +50,8 @@ function TaskList({ tasks, onDeleteTask }) {
                                     </ModalContent>
                                 </Modal>
 
-                                <Text>Start Date: {task.startDate}</Text>
-                                {(task.endDate && task.status === "Completed") && <Text>End Date: {task.endDate}</Text>}
+                                <Text>Start Date: {formatDate(task.startDate)}</Text>
+                                {(task.endDate && task.status === "Completed") && <Text>End Date: {formatDate(task.endDate)}</Text>}
                             </Box>
                         )}
                     </Box>
