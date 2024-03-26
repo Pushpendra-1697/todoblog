@@ -56,6 +56,7 @@ function App() {
                 <option value="P1">P1</option>
                 <option value="P2">P2</option>
               </select>
+              <Input bg={'white'} type='date' /> To
               <Input bg={'white'} type='date' />
             </Box>
             <Box display={{ base: 'none', sm: 'none', lg: 'flex', md: 'flex', xl: 'flex', "2xl": 'flex' }} alignItems={'center'} gap={'20px'}>
