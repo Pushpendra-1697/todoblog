@@ -39,7 +39,12 @@ React (JSX Syntax), Redux, HTML-CSS-JS, Authentication, Axios for handling async
 ```
 
 ## Some Project Screenshots :
-### A) For Computer Screen:
-
+#### A) For Computer Screen:
+![Screenshot (592)](https://github.com/Pushpendra-1697/todoblog/assets/104748364/ae0976f8-8f31-4a64-99ba-6853600d394e)
+![Screenshot (589)](https://github.com/Pushpendra-1697/todoblog/assets/104748364/62a65749-1705-40b5-bc73-5284acb85c0c)
+![Screenshot (591)](https://github.com/Pushpendra-1697/todoblog/assets/104748364/b254b04e-540f-47da-bf3e-a0f4c7b07e8e)
 
 #### B) For Mobile/Tablet Screen :
+![Screenshot (593)](https://github.com/Pushpendra-1697/todoblog/assets/104748364/8f6f482f-c00d-4adb-b646-61e6e92ce65b)
+![Screenshot (594)](https://github.com/Pushpendra-1697/todoblog/assets/104748364/fa31037b-1d75-4223-9d45-161756d46800)
+
