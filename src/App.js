@@ -12,6 +12,21 @@ function App() {
     setTasks([...tasks, newTask]);
   };
 
+  const sortByPriorityHTL = () => {
+    const sorted = [...tasks].sort((a, b) => {
+      const priorityOrder = { P0: 0, P1: 1, P2: 2 };
+      return priorityOrder[a.priority] - priorityOrder[b.priority];
+    });
+    setTasks(sorted);
+  };
+  const sortByPriorityLTH = () => {
+    const sorted = [...tasks].sort((a, b) => {
+      const priorityOrder = { P0: 0, P1: 1, P2: 2 };
+      return priorityOrder[b.priority] - priorityOrder[a.priority];
+    });
+    setTasks(sorted);
+  };
+
   const deleteTask = (taskId) => {
     const taskToDelete = tasks.find(task => task.id === taskId);
     if (taskToDelete && taskToDelete.status !== 'Completed') {
@@ -60,13 +75,9 @@ function App() {
               <Input bg={'white'} type='date' />
             </Box>
             <Box display={{ base: 'none', sm: 'none', lg: 'flex', md: 'flex', xl: 'flex', "2xl": 'flex' }} alignItems={'center'} gap={'20px'}>
-              <p>Sort By:</p>
-              <select style={{ padding: '7px 5px', borderRadius: '5px' }}>
-                <option value={''}>Priority</option>
-                <option value="P0">P0</option>
-                <option value="P1">P1</option>
-                <option value="P2">P2</option>
-              </select>
+              <p>Sort By Priority:</p>
+              <Button onClick={sortByPriorityHTL} variant={'outline'} colorScheme='blue'>Low To High</Button>
+              <Button onClick={sortByPriorityLTH} variant={'outline'} colorScheme='blue'>High To Low</Button>
             </Box>
           </Box>
           <Button onClick={onOpen} bg={'blue.600'} fontSize={'15px'} color={'white'}>Add New Task</Button>
