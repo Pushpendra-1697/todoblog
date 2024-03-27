@@ -7,6 +7,10 @@ import { RxCrossCircled } from "react-icons/rx";
 function App() {
   const [tasks, setTasks] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [filterAssignee, setFilterAssignee] = useState('');
+  const [filterPriority, setFilterPriority] = useState('');
+  const [filterFromDate, setFilterFromDate] = useState('');
+  const [filterToDate, setFilterToDate] = useState('');
 
   const addTask = (newTask) => {
     setTasks([...tasks, newTask]);
@@ -49,6 +53,28 @@ function App() {
     }));
   };
 
+  const handleFilter = () => {
+    let filteredTasks = tasks;
+
+    if (filterAssignee) {
+      filteredTasks = filteredTasks.filter(task => task.assignee === filterAssignee);
+    };
+    if (filterPriority) {
+      filteredTasks = filteredTasks.filter(task => task.priority === filterPriority);
+    };
+    if (filterFromDate && filterToDate) {
+      const fromDate = new Date(filterFromDate);
+      const toDate = new Date(filterToDate);
+      filteredTasks = filteredTasks.filter(task => {
+        const taskDate = new Date(task.startDate);
+        return taskDate >= fromDate && taskDate <= toDate;
+      });
+    };
+
+    return filteredTasks;
+  };
+
+  const filteredTasks = handleFilter();
 
   return (
     <Box className="App" fontFamily={'Poppins'} minH={'100vh'} bgGradient="linear(to-r, red.100, blue.100)" display={'flex'} flexDirection={'column'} gap={'20px'} padding={'30px'}>
@@ -64,20 +90,20 @@ function App() {
           <Box display={'flex'} flexDirection={'column'} gap={'20px'}>
             <Box display={'flex'} flexDirection={{ base: 'column', sm: "column", md: 'row', lg: 'row', xl: 'row', '2xl': 'row' }} alignItems={'center'} gap={'20px'}>
               <p>Filter By:</p>
-              <Input bg={'white'} placeholder='Assignee Name' />
-              <select style={{ padding: '7px 5px', borderRadius: '5px' }}>
-                <option value={''}>Priority</option>
+              <Input bg={'white'} placeholder='Assignee Name' value={filterAssignee} onChange={(e) => setFilterAssignee(e.target.value)} />
+              <select style={{ padding: '7px 5px', borderRadius: '5px' }} value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}>
+                <option value={''}>All Priorities</option>
                 <option value="P0">P0</option>
                 <option value="P1">P1</option>
                 <option value="P2">P2</option>
               </select>
-              <Input bg={'white'} type='date' /> To
-              <Input bg={'white'} type='date' />
+              <Input bg={'white'} type='date' value={filterFromDate} onChange={(e) => setFilterFromDate(e.target.value)} /> To
+              <Input bg={'white'} type='date' value={filterToDate} onChange={(e) => setFilterToDate(e.target.value)} />
             </Box>
             <Box display={{ base: 'none', sm: 'none', lg: 'flex', md: 'flex', xl: 'flex', "2xl": 'flex' }} alignItems={'center'} gap={'20px'}>
-              <p>Sort By Priority:</p>
-              <Button onClick={sortByPriorityHTL} variant={'outline'} colorScheme='blue'>Low To High</Button>
-              <Button onClick={sortByPriorityLTH} variant={'outline'} colorScheme='blue'>High To Low</Button>
+              <p>Sort By:</p>
+              <Button onClick={sortByPriorityHTL} variant={'outline'} colorScheme='blue'>Low To High Priority</Button>
+              <Button onClick={sortByPriorityLTH} variant={'outline'} colorScheme='blue'>High To Low Priority</Button>
             </Box>
           </Box>
           <Button onClick={onOpen} bg={'blue.600'} fontSize={'15px'} color={'white'}>Add New Task</Button>
@@ -93,7 +119,7 @@ function App() {
           </ModalContent>
         </Modal>
         <Box overflowX={'auto'}>
-          <TaskList tasks={tasks} onDeleteTask={deleteTask} onUpdateTask={updateTask} />
+          <TaskList tasks={filteredTasks} onDeleteTask={deleteTask} onUpdateTask={updateTask} />
         </Box>
       </Box>
     </Box>
