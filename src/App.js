@@ -43,11 +43,15 @@ function App() {
   const updateTask = (taskId, newStatus, newPriority) => {
     setTasks(tasks.map(task => {
       if (task.id === taskId) {
-        return {
+        const updatedTask = {
           ...task,
           status: newStatus,
           priority: newPriority
         };
+        if (newStatus === 'Completed') {
+          updatedTask.endDate = new Date().toISOString();
+        }
+        return updatedTask;
       }
       return task;
     }));
